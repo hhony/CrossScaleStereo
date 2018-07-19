@@ -31,6 +31,7 @@ THE SOFTWARE.
 
 #include <opencv2/core/core.hpp>
 #include <bitset>
+
 using namespace std;
 using namespace cv;
 // #define USE_CENCUS
@@ -38,12 +39,16 @@ using namespace cv;
 #define CENCUS_BIT 8
 
 class CDisparityHelper {
-public:
-	cv::Mat GetGradient(cv::InputArray image);
-	cv::Mat GetMatchingCost(cv::Mat imL, cv::Mat imR, int maxLevel);
-	cv::Mat GetMatchingCost_CEN(cv::Mat imL, cv::Mat imR, int maxLevel);
-	cv::Mat GetDisparity_WTA(float *costVol, int w, int h, int maxLevel);
-	cv::Mat GetRightMatchingCostFromLeft(cv::Mat leftVol, int w, int h, int maxLevel);
+ public:
+  cv::Mat GetGradient(cv::InputArray image);
+
+  cv::Mat GetMatchingCost(cv::Mat imL, cv::Mat imR, int maxLevel);
+
+  cv::Mat GetMatchingCost_CEN(cv::Mat imL, cv::Mat imR, int maxLevel);
+
+  cv::Mat GetDisparity_WTA(float *costVol, int w, int h, int maxLevel);
+
+  cv::Mat GetRightMatchingCostFromLeft(cv::Mat leftVol, int w, int h, int maxLevel);
 };
 
 #endif

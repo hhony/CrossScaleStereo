@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
 #define PENALTY_CROSS_SEG 5
 
 #include <vector>
+
 using namespace std;
 
 #include <algorithm>
@@ -45,8 +46,8 @@ using namespace std;
  * edges: array of edges.
  * c: constant for threshold function.
  */
-universe *segment_graph(int num_vertices, int num_edges, edge *edges, 
-			float c, unsigned char *edges_mask) { 
+universe *segment_graph(int num_vertices, int num_edges, edge *edges,
+                        float c, unsigned char *edges_mask) {
   // sort edges by weight
   std::sort(edges, edges + num_edges);
 
@@ -56,47 +57,43 @@ universe *segment_graph(int num_vertices, int num_edges, edge *edges,
   // init thresholds
   float *threshold = new float[num_vertices];
   for (int i = 0; i < num_vertices; i++)
-    threshold[i] = THRESHOLD(1,c);
-  
+    threshold[i] = THRESHOLD(1, c);
+
   // for each edge, in non-decreasing weight order...
   for (int i = 0; i < num_edges; i++) {
     edge *pedge = &edges[i];
-    
+
     // components connected by this edge
     int a = u->find(pedge->a);
     int b = u->find(pedge->b);
-    if (a != b) 
-	{
-		if (pedge->w <= threshold[a] && pedge->w <= threshold[b])
-		{
-			edges_mask[i]=255;
-			u->join(a, b);
-			a = u->find(a);	
-			
-			threshold[a]  = pedge->w + THRESHOLD(u->size(a), c);
-		}
+    if (a != b) {
+      if (pedge->w <= threshold[a] && pedge->w <= threshold[b]) {
+        edges_mask[i] = 255;
+        u->join(a, b);
+        a = u->find(a);
+
+        threshold[a] = pedge->w + THRESHOLD(u->size(a), c);
+      }
     }
   }
 
   //added by X. Sun: re-organizing the structures to be a single tree
-  for (int i = 0; i < num_edges; i++)
-  {
-		int a = u->find(edges[i].a);
-		int b = u->find(edges[i].b);
-		if (a != b)
-		{
-			int size_min = MIN(u->size(a), u->size(b));
-			u->join(a, b);
+  for (int i = 0; i < num_edges; i++) {
+    int a = u->find(edges[i].a);
+    int b = u->find(edges[i].b);
+    if (a != b) {
+      int size_min = MIN(u->size(a), u->size(b));
+      u->join(a, b);
 
-			//record
-			edges_mask[i]=255;
-			if(size_min > MIN_SIZE_SEG) 
-				edges[i].w += PENALTY_CROSS_SEG;
-		}
+      //record
+      edges_mask[i] = 255;
+      if (size_min > MIN_SIZE_SEG)
+        edges[i].w += PENALTY_CROSS_SEG;
+    }
   }
 
   // free up
-  delete []threshold;
+  delete[]threshold;
   return u;
 }
 

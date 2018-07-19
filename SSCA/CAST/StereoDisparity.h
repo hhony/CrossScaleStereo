@@ -71,14 +71,17 @@ THE SOFTWARE.
 #pragma comment( lib, "opencv_videostab246.lib" )
 #endif
 
-enum METHOD {ST_RAW, ST_REFINED};
-void stereo_routine(const char *left_input, const char *right_input, const char *output, 
-					int max_dis_level, int scale, float sigma, METHOD method);
+enum METHOD {
+  ST_RAW, ST_REFINED
+};
 
-void stereo_disparity_normal(cv::InputArray left_image, cv::InputArray right_image, cv::OutputArray disp, 
-					  int max_dis_level, int scale, float sigma);
+void stereo_routine(const char *left_input, const char *right_input, const char *output,
+                    int max_dis_level, int scale, float sigma, METHOD method);
 
-void stereo_disparity_iteration(cv::InputArray left_image, cv::InputArray right_image, cv::OutputArray disp, 
-					  int max_dis_level, int scale, float sigma);
+void stereo_disparity_normal(cv::InputArray left_image, cv::InputArray right_image, cv::OutputArray disp,
+                             int max_dis_level, int scale, float sigma);
+
+void stereo_disparity_iteration(cv::InputArray left_image, cv::InputArray right_image, cv::OutputArray disp,
+                                int max_dis_level, int scale, float sigma);
 
 #endif

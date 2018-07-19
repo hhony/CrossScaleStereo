@@ -1,4 +1,5 @@
 #pragma once
+
 #include "../CommFunc.h"
 #include "../CCMethod.h"
 
@@ -6,7 +7,6 @@
 #define CENCUS_BIT 80
 #define LAMBDA_CEN 0.5
 #define GRD_BOUND  0.1
-
 
 
 #define CG_BORDER_THRES 1.0
@@ -19,18 +19,19 @@
 // Cencus + Gradient Cost
 //
 class CGCC :
-	public CCMethod
-{
-public:
-	CGCC(void) 
-	{
-		printf( "\n\t\tCencus + Gradient for Cost Computation" );
-	}
-	~CGCC(void) {}
-public:
-	void buildCV( const Mat& lImg, const Mat& rImg, const int maxDis, Mat* costVol );
+    public CCMethod {
+ public:
+  CGCC(void) {
+    printf("\n\t\tCencus + Gradient for Cost Computation");
+  }
+
+  ~CGCC(void) {}
+
+ public:
+  void buildCV(const Mat &lImg, const Mat &rImg, const int maxDis, Mat *costVol);
+
 #ifdef COMPUTE_RIGHT
-	void buildRightCV( const Mat& lImg, const Mat& rImg, const int maxDis, Mat* rCostVol );
+  void buildRightCV( const Mat& lImg, const Mat& rImg, const int maxDis, Mat* rCostVol );
 #endif
 };
 

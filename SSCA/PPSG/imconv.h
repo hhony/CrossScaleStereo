@@ -26,9 +26,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
 #include "imutil.h"
 #include "misc.h"
 
-#define	RED_WEIGHT	0.299
-#define GREEN_WEIGHT	0.587
-#define BLUE_WEIGHT	0.114
+#define RED_WEIGHT    0.299
+#define GREEN_WEIGHT  0.587
+#define BLUE_WEIGHT   0.114
 
 static image<uchar> *imageRGBtoGRAY(image<rgb> *input) {
   int width = input->width();
@@ -38,9 +38,9 @@ static image<uchar> *imageRGBtoGRAY(image<rgb> *input) {
   for (int y = 0; y < height; y++) {
     for (int x = 0; x < width; x++) {
       imRef(output, x, y) = (uchar)
-	(imRef(input, x, y).r * RED_WEIGHT +
-	 imRef(input, x, y).g * GREEN_WEIGHT +
-	 imRef(input, x, y).b * BLUE_WEIGHT);
+          (imRef(input, x, y).r * RED_WEIGHT +
+           imRef(input, x, y).g * GREEN_WEIGHT +
+           imRef(input, x, y).b * BLUE_WEIGHT);
     }
   }
   return output;
@@ -58,7 +58,7 @@ static image<rgb> *imageGRAYtoRGB(image<uchar> *input) {
       imRef(output, x, y).b = imRef(input, x, y);
     }
   }
-  return output;  
+  return output;
 }
 
 static image<float> *imageUCHARtoFLOAT(image<uchar> *input) {
@@ -71,7 +71,7 @@ static image<float> *imageUCHARtoFLOAT(image<uchar> *input) {
       imRef(output, x, y) = imRef(input, x, y);
     }
   }
-  return output;  
+  return output;
 }
 
 static image<float> *imageINTtoFLOAT(image<int> *input) {
@@ -84,11 +84,11 @@ static image<float> *imageINTtoFLOAT(image<int> *input) {
       imRef(output, x, y) = imRef(input, x, y);
     }
   }
-  return output;  
+  return output;
 }
 
-static image<uchar> *imageFLOATtoUCHAR(image<float> *input, 
-				       float min, float max) {
+static image<uchar> *imageFLOATtoUCHAR(image<float> *input,
+                                       float min, float max) {
   int width = input->width();
   int height = input->height();
   image<uchar> *output = new image<uchar>(width, height, false);
@@ -99,8 +99,8 @@ static image<uchar> *imageFLOATtoUCHAR(image<float> *input,
   float scale = UCHAR_MAX / (max - min);
   for (int y = 0; y < height; y++) {
     for (int x = 0; x < width; x++) {
-      uchar val = (uchar)((imRef(input, x, y) - min) * scale);
-      imRef(output, x, y) = bound(val, (uchar)0, (uchar)UCHAR_MAX);
+      uchar val = (uchar) ((imRef(input, x, y) - min) * scale);
+      imRef(output, x, y) = bound(val, (uchar) 0, (uchar) UCHAR_MAX);
     }
   }
   return output;
@@ -122,7 +122,7 @@ static image<long> *imageUCHARtoLONG(image<uchar> *input) {
       imRef(output, x, y) = imRef(input, x, y);
     }
   }
-  return output;  
+  return output;
 }
 
 static image<uchar> *imageLONGtoUCHAR(image<long> *input, long min, long max) {
@@ -133,11 +133,11 @@ static image<uchar> *imageLONGtoUCHAR(image<long> *input, long min, long max) {
   if (max == min)
     return output;
 
-  float scale = UCHAR_MAX / (float)(max - min);
+  float scale = UCHAR_MAX / (float) (max - min);
   for (int y = 0; y < height; y++) {
     for (int x = 0; x < width; x++) {
-      uchar val = (uchar)((imRef(input, x, y) - min) * scale);
-      imRef(output, x, y) = bound(val, (uchar)0, (uchar)UCHAR_MAX);
+      uchar val = (uchar) ((imRef(input, x, y) - min) * scale);
+      imRef(output, x, y) = bound(val, (uchar) 0, (uchar) UCHAR_MAX);
     }
   }
   return output;
@@ -149,8 +149,8 @@ static image<uchar> *imageLONGtoUCHAR(image<long> *input) {
   return imageLONGtoUCHAR(input, min, max);
 }
 
-static image<uchar> *imageSHORTtoUCHAR(image<short> *input, 
-					short min, short max) {
+static image<uchar> *imageSHORTtoUCHAR(image<short> *input,
+                                       short min, short max) {
   int width = input->width();
   int height = input->height();
   image<uchar> *output = new image<uchar>(width, height, false);
@@ -158,11 +158,11 @@ static image<uchar> *imageSHORTtoUCHAR(image<short> *input,
   if (max == min)
     return output;
 
-  float scale = UCHAR_MAX / (float)(max - min);
+  float scale = UCHAR_MAX / (float) (max - min);
   for (int y = 0; y < height; y++) {
     for (int x = 0; x < width; x++) {
-      uchar val = (uchar)((imRef(input, x, y) - min) * scale);
-      imRef(output, x, y) = bound(val, (uchar)0, (uchar)UCHAR_MAX);
+      uchar val = (uchar) ((imRef(input, x, y) - min) * scale);
+      imRef(output, x, y) = bound(val, (uchar) 0, (uchar) UCHAR_MAX);
     }
   }
   return output;

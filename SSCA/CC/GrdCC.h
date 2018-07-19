@@ -1,4 +1,5 @@
 #pragma once
+
 #include "../CommFunc.h"
 #include "../CCMethod.h"
 
@@ -13,18 +14,19 @@
 // TAD + GRD for Cost Computation
 //
 class GrdCC :
-	public CCMethod
-{
-public:
-	GrdCC(void) 
-	{
-		printf( "\n\t\tGRD method for Cost Computation" );
-	}
-	~GrdCC(void) {}
-public:
-	void buildCV( const Mat& lImg, const Mat& rImg, const int maxDis, Mat* costVol );
+    public CCMethod {
+ public:
+  GrdCC(void) {
+    printf("\n\t\tGRD method for Cost Computation");
+  }
+
+  ~GrdCC(void) {}
+
+ public:
+  void buildCV(const Mat &lImg, const Mat &rImg, const int maxDis, Mat *costVol);
+
 #ifdef COMPUTE_RIGHT
-	void buildRightCV( const Mat& lImg, const Mat& rImg, const int maxDis, Mat* rCostVol );
+  void buildRightCV( const Mat& lImg, const Mat& rImg, const int maxDis, Mat* rCostVol );
 #endif
 };
 
