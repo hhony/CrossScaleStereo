@@ -1,6 +1,6 @@
 #pragma once
-#include "..\CommFunc.h"
-#include "..\CCMethod.h"
+#include "../CommFunc.h"
+#include "../CCMethod.h"
 
 #define CENCUS_WND 9
 #define CENCUS_BIT 80

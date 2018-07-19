@@ -1,6 +1,6 @@
 #pragma once
-#include "..\CommFunc.h"
-#include "..\CAMethod.h"
+#include "../CommFunc.h"
+#include "../CAMethod.h"
 
 //
 // Bilateral Filter for Cost Aggregatation
@@ -11,7 +11,7 @@ class BFCA :
 public:
 	BFCA(void)
 	{
-		printf( "\n\t\Bilateral Filter for cost aggregation" );
+		printf( "\n\tBilateral Filter for cost aggregation" );
 	}
 
 	~BFCA(void) {}

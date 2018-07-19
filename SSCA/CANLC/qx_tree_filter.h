@@ -8,7 +8,7 @@
 #define QX_TREE_FILTER_H
 #include "qx_mst_kruskals_image.h"
 #include "qx_basic.h"
-#include <malloc.h>
+//#include <malloc.h>
 class qx_tree_filter
 {
 public:
@@ -34,6 +34,12 @@ private:
 
 	double m_table[QX_DEF_CHAR_MAX+1];
 	int*m_node_id;
+
+	double* m_mst_value_to_be_filtered;
+	double* m_mst_weight_sum_aggregated_from_child_to_parent;
+	double* m_mst_weight_sum_aggregated_from_parent_to_child;
+	double* m_mst_value_sum_aggregated_from_child_to_parent;
+	double* m_mst_value_sum_aggregated_from_parent_to_child;
 private:
 	void filter_main(bool compute_weight);
 };

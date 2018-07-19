@@ -1,5 +1,5 @@
 #pragma once
-#include "..\CommFunc.h"
+#include "../CommFunc.h"
 // to use fast inverse method
 #define FAST_INV
 

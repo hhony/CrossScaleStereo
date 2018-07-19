@@ -12,7 +12,7 @@
 #define QX_DEF_MST_KI_8NR_NEIGHBOR			8
 #define QX_DEF_MST_KI_PARENT_DEFAULT		-1
 #define QX_DEF_MST_KI_SIGMA_RANGE			0.1
-#include "ctmf.h"
+#include "../ctmf/ctmf.h"
 class qx_queue_mst
 {
 public:

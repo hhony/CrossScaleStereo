@@ -2,6 +2,8 @@
 #include "qx_basic.h"
 #include "qx_mst_kruskals_image.h"
 
+using namespace std;
+
 inline int qx_mst_yx_2_image_index(int y,int x,int h,int w){return(y*w+x);}
 inline int qx_mst_compute_nr_edge_4neighbor(int h,int w){if(h<=2&&w<=2) return(0); else return((h-1)*w+(w-1)*h);}
 inline int qx_mst_compute_nr_edge_8neighbor(int h,int w){if(h<=2&&w<=2) return(0); else return((h-1)*w+(w-1)*h+(h-1)*(w-1)*2);}
@@ -37,7 +39,7 @@ inline void qx_mst_compute_edges_per_pixel(int**edges,unsigned char*distance,uns
 		int cost_max=0;
 		for(int i=0;i<nr_channel;i++) 
 		{
-			cost_max=max(cost_max,abs(image[idt+i]-image[id0+i]));
+			cost_max=(int)fmax(cost_max,abs(image[idt+i]-image[id0+i]));
 		}
 		distance[nr_edge]=cost_max;
 	}
@@ -166,19 +168,19 @@ void qx_mst_kruskals_image::init_mst()
 }
 int qx_mst_kruskals_image::mst(unsigned char*image,bool print_edges)
 {
-	qx_timer timer;
-	timer.start();
+//	qx_timer timer;
+//	timer.start();
 	init_mst();
 	//timer.fps_display();
-	timer.start();
+//	timer.start();
 	ctmf(image,m_image,m_w,m_h,m_w*m_nr_channel,m_w*m_nr_channel,1,m_nr_channel,m_h*m_w*m_nr_channel);
 	if(m_nr_neighbor==QX_DEF_MST_KI_4NR_NEIGHBOR) qx_mst_compute_edges_4neighbor(m_edge,m_distance,m_image,m_nr_channel,m_h,m_w);//find edges
 	else qx_mst_compute_edges_8neighbor(m_edge,m_distance,m_image,m_nr_channel,m_h,m_w);
 	//timer.fps_display();
-	timer.start();
+//	timer.start();
 	qx_sort_increase_using_histogram(m_id_edge,m_distance,m_nr_edge);//sorting edges in a nondesc
 	//timer.fps_display("qx_sort_increase_using_histogram");
-	timer.start();
+//	timer.start();
 	kruskal();
 	//timer.fps_display("kruskal");
 	build_tree();
@@ -228,8 +230,8 @@ void qx_mst_kruskals_image::kruskal()
 }
 int qx_mst_kruskals_image::build_tree()
 {
-	qx_timer timer;
-	timer.start();
+//	qx_timer timer;
+//	timer.start();
 	int tree_parent=0;
 	int parent=tree_parent;
 	memset(m_parent,m_parent_default,sizeof(int)*m_nr_vertices);

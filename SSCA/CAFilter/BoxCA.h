@@ -1,6 +1,6 @@
 #pragma once
-#include "..\CommFunc.h"
-#include "..\CAMethod.h"
+#include "../CommFunc.h"
+#include "../CAMethod.h"
 
 //
 // Box Filter for Cost Aggregatation
@@ -11,7 +11,7 @@ class BoxCA :
 public:
 	BoxCA(void)
 	{
-		printf( "\n\t\Box Filter for cost aggregation" );
+		printf( "\n\tBox Filter for cost aggregation" );
 	}
 
 	~BoxCA(void) {}

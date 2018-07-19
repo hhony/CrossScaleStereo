@@ -1,29 +1,30 @@
 #include "qx_basic.h"
 
-#include <windows.h>//The win32 API library 
-/*timer*/
-void qx_timer::start()
-{
-	//m_begin=clock();
-	
-    LARGE_INTEGER li;
-    if(!QueryPerformanceFrequency(&li))
-        cout << "QueryPerformanceFrequency failed!\n";
+//#include <windows.h>//The win32 API library
+///*timer*/
+//void qx_timer::start()
+//{
+//	//m_begin=clock();
+//
+//    LARGE_INTEGER li;
+//    if(!QueryPerformanceFrequency(&li))
+//        cout << "QueryPerformanceFrequency failed!\n";
+//
+//    m_pc_frequency = double(li.QuadPart);///1000.0;
+//
+//    QueryPerformanceCounter(&li);
+//    m_counter_start = li.QuadPart;
+//}
+//double qx_timer::stop()
+//{
+//	//m_end=clock(); return ( double(m_end-m_begin)/CLOCKS_PER_SEC );
+//    LARGE_INTEGER li;
+//    QueryPerformanceCounter(&li);
+//    return double(li.QuadPart-m_counter_start)/m_pc_frequency;
+//}
+//void qx_timer::time_display(char *disp,int nr_frame){ printf("Running time (%s) is: %5.5f Seconds.\n",disp,stop()/nr_frame);}
+//void qx_timer::fps_display(char *disp,int nr_frame){ printf("Running time (%s) is: %5.5f frame per second.\n",disp,(double)nr_frame/stop());}
 
-    m_pc_frequency = double(li.QuadPart);///1000.0;
-
-    QueryPerformanceCounter(&li);
-    m_counter_start = li.QuadPart;
-}
-double qx_timer::stop()
-{
-	//m_end=clock(); return ( double(m_end-m_begin)/CLOCKS_PER_SEC );
-    LARGE_INTEGER li;
-    QueryPerformanceCounter(&li);
-    return double(li.QuadPart-m_counter_start)/m_pc_frequency;
-}
-void qx_timer::time_display(char *disp,int nr_frame){ printf("Running time (%s) is: %5.5f Seconds.\n",disp,stop()/nr_frame);}
-void qx_timer::fps_display(char *disp,int nr_frame){ printf("Running time (%s) is: %5.5f frame per second.\n",disp,(double)nr_frame/stop());}
 void boxcar_sliding_window_x(double *out,double *in,int h,int w,int radius)
 {
     double scale = 1.0f / (2*radius+1);    
@@ -60,9 +61,9 @@ void boxcar_sliding_window_x(double *out,double *in,int h,int w,int radius)
 }
 void boxcar_sliding_window_y(double *out,double *in,int h,int w,int radius)
 {
-    double scale = 1.0f / (2*radius+1);    
-    for (int x = 0; x < w; x++) 
-	{    
+    double scale = 1.0f / (2*radius+1);
+    for (int x = 0; x < w; x++)
+	{
         double t;
         // do left edge
         t = in[x] * radius;
@@ -75,7 +76,7 @@ void boxcar_sliding_window_y(double *out,double *in,int h,int w,int radius)
             t += in[c+radius*w];
             t -= in[x];
             out[c] = t * scale;
-        }        
+        }
         // main loop
         for(int y = radius+1; y < h-radius; y++) {
             int c = y*w+x;
@@ -89,7 +90,7 @@ void boxcar_sliding_window_y(double *out,double *in,int h,int w,int radius)
             t += in[(h-1)*w+x];
             t -= in[c-(radius*w)-w];
             out[c] = t * scale;
-        }        
+        }
     }
 }
 void boxcar_sliding_window(double **out,double **in,double **temp,int h,int w,int radius)
@@ -134,9 +135,9 @@ void boxcar_sliding_window_x(float *out,float *in,int h,int w,int radius)
 }
 void boxcar_sliding_window_y(float *out,float *in,int h,int w,int radius)
 {
-    float scale = 1.0f / (2*radius+1);    
-    for (int x = 0; x < w; x++) 
-	{    
+    float scale = 1.0f / (2*radius+1);
+    for (int x = 0; x < w; x++)
+	{
         float t;
         // do left edge
         t = in[x] * radius;
@@ -149,7 +150,7 @@ void boxcar_sliding_window_y(float *out,float *in,int h,int w,int radius)
             t += in[c+radius*w];
             t -= in[x];
             out[c] = t * scale;
-        }        
+        }
         // main loop
         for(int y = radius+1; y < h-radius; y++) {
             int c = y*w+x;
@@ -168,7 +169,7 @@ void boxcar_sliding_window_y(float *out,float *in,int h,int w,int radius)
 }
 void boxcar_sliding_window(float**out,float**in,float**temp,int h,int w,int radius)
 {
-	int min_hw=min(h,w);
+  int min_hw=(int)fmin(h,w);
 	if(radius>=min_hw)
 	{
 		double dsum=0;
@@ -188,75 +189,75 @@ void boxcar_sliding_window(float**out,float**in,float**temp,int h,int w,int radi
 }
 void boxcar_sliding_window_x(unsigned char*out,unsigned char*in,int h,int w,int radius)
 {
-    float scale = 1.0f / (2*radius+1);    
-    for (int y = 0; y < h; y++) {    
+    float scale = 1.0f / (2*radius+1);
+    for (int y = 0; y < h; y++) {
         float t;
         // do left edge
         t = in[y*w] * radius;
         for (int x = 0; x < radius+1; x++) {
             t += in[y*w+x];
         }
-        out[y*w] = unsigned char(t * scale+0.5);
+        out[y*w] = (uint8_t)(t * scale+0.5);
         for(int x = 1; x < radius+1; x++) {
             int c = y*w+x;
             t += in[c+radius];
             t -= in[y*w];
-            out[c] = unsigned char(t * scale+0.5);
-        }        
+            out[c] = (uint8_t)(t * scale+0.5);
+        }
         // main loop
         for(int x = radius+1; x < w-radius; x++) {
             int c = y*w+x;
             t += in[c+radius];
             t -= in[c-radius-1];
-            out[c] = unsigned char(t * scale+0.5);
+            out[c] = (uint8_t)(t * scale+0.5);
         }
         // do right edge
         for (int x = w-radius; x < w; x++) {
             int c = y*w+x;
             t += in[(y*w)+w-1];
             t -= in[c-radius-1];
-            out[c] = unsigned char(t * scale+0.5);
+            out[c] = (uint8_t)(t * scale+0.5);
         }
-        
+
     }
 }
 void boxcar_sliding_window_y(unsigned char*out,unsigned char*in,int h,int w,int radius)
 {
     float scale = 1.0f / (2*radius+1);    
-    for (int x = 0; x < w; x++) 
-	{    
+    for (int x = 0; x < w; x++)
+	{
         float t;
         // do left edge
         t = in[x] * radius;
         for (int y = 0; y < radius+1; y++) {
             t += in[y*w+x];
         }
-        out[x] = unsigned char(t * scale+0.5);
+        out[x] = (uint8_t)(t * scale+0.5);
         for(int y = 1; y < radius+1; y++) {
             int c = y*w+x;
             t += in[c+radius*w];
             t -= in[x];
-            out[c] = unsigned char(t * scale+0.5);
+            out[c] = (uint8_t)(t * scale+0.5);
         }        
         // main loop
         for(int y = radius+1; y < h-radius; y++) {
             int c = y*w+x;
             t += in[c+radius*w];
             t -= in[c-(radius*w)-w];
-            out[c] = unsigned char(t * scale+0.5);
+            out[c] = (uint8_t)(t * scale+0.5);
         }
         // do right edge
         for (int y = h-radius; y < h; y++) {
             int c = y*w+x;
             t += in[(h-1)*w+x];
             t -= in[c-(radius*w)-w];
-            out[c] = unsigned char(t * scale+0.5);
+            out[c] = (uint8_t)(t * scale+0.5);
         }
     }
 }
 void boxcar_sliding_window(unsigned char**out,unsigned char**in,unsigned char**temp,int h,int w,int radius)
 {
-	int min_hw=min(h,w);
+	int min_hw=(int)fmin(h,w);
 	if(radius<min_hw)
 	{
 		boxcar_sliding_window_x(temp[0],in[0],h,w,radius);
@@ -268,7 +269,7 @@ void boxcar_sliding_window(unsigned char**out,unsigned char**in,unsigned char**t
 		unsigned char*in_=in[0];
 		for(int y=0;y<h;y++) for(int x=0;x<w;x++) dsum+=*in_++;
 		dsum/=(h*w);
-		unsigned char usum=unsigned char(dsum+0.5);
+		unsigned char usum=(uint8_t)(dsum+0.5);
 		unsigned char*out_=out[0];
 		for(int y=0;y<h;y++) for(int x=0;x<w;x++) *out_++=usum;
 	}
@@ -281,12 +282,12 @@ void gaussian_recursive_x(double **od,double **id, int w, int h, double a0, doub
 	for(int y=0;y<h;y++)
 	{
 		xp = id[y][0]; yb = coefp*xp; yp = yb;
-		for (int x = 0; x < w; x++) 
+		for (int x = 0; x < w; x++)
 		{
 			double xc = id[y][x];
 			double yc = a0*xc + a1*xp - b1*yp - b2*yb;
 			od[y][x] = yc;
-			xp = xc; yb = yp; yp = yc; 
+			xp = xc; yb = yp; yp = yc;
 		}
 	}
     // reverse pass
@@ -503,7 +504,7 @@ int gaussian_recursive(float **image,float **temp,float sigma,int order,int h,in
 
     default:
         fprintf(stderr, "gaussianFilter: invalid order parameter!\n");
-        return 0;
+        return -1;
     }
     coefp = (a0+a1)/(1+b1+b2);
     coefn = (a2+a3)/(1+b1+b2);
@@ -511,6 +512,7 @@ int gaussian_recursive(float **image,float **temp,float sigma,int order,int h,in
 	gaussian_recursive_x(temp,image,w,h,a0,a1,a2,a3,b1,b2,coefp,coefn);
 	gaussian_recursive_y(image,temp,w,h,a0,a1,a2,a3,b1,b2,coefp,coefn);
 	//timer.fps_display();
+  return 0;
 }
 
 
@@ -538,7 +540,7 @@ void qx_specular_free_image(unsigned char ***image_specular_free,unsigned char *
 				if(isum==0) c=0;
 				else
 				{
-					imax=max(max(r,g),b);
+					imax=fmax(fmax(r,g),b);
 					c=(float)(imax/isum);
 				}
 				t0=t1*c;
@@ -559,9 +561,9 @@ void qx_specular_free_image(unsigned char ***image_specular_free,unsigned char *
 					if(rf<0.f) rf=0.f; else if(rf>255.f) rf=255.f;
 					if(gf<0.f) gf=0.f; else if(gf>255.f) gf=255.f;
 					if(bf<0.f) bf=0.f; else if(bf>255.f) bf=255.f;
-					*image_specular_free_x++=unsigned char(rf+0.5f);
-					*image_specular_free_x++=unsigned char(gf+0.5f);
-					*image_specular_free_x++=unsigned char(bf+0.5f);
+					*image_specular_free_x++=(uint8_t)(rf+0.5f);
+					*image_specular_free_x++=(uint8_t)(gf+0.5f);
+					*image_specular_free_x++=(uint8_t)(bf+0.5f);
 				}
 			}
 			else
@@ -613,7 +615,7 @@ void qx_detect_occlusion_left_right(unsigned char**mask_left,unsigned char**dept
 			{
 				if(d==0||abs(d-depth_right[y][xr])>=1)
 				{
-					//depth_left[y][x]=min(depth_left[y][x],depth_right[y][xr]);
+					//depth_left[y][x]=(int)fmin(depth_left[y][x],depth_right[y][xr]);
 					mask_left[y][x]=255;
 				}
 			}
@@ -626,14 +628,14 @@ int file_open_ascii(char *file_path,int *out,int len)
 {
 	FILE *file_in; char str[65]; int i;
 	//file_in=fopen(file_path,"r");
-	fopen_s(&file_in,file_path,"r");
+  file_in = fopen(file_path,"r");
 	if(file_in!=NULL)
 	{
 		fseek(file_in,0,SEEK_SET);	
 		for(i=0;i<len;i++ )
-		{ 
-			//fscanf(file_in,"%s",str); 
-			fscanf_s(file_in,"%s",str,65); 
+		{
+			//fscanf(file_in,"%s",str);
+			fscanf(file_in,"%s",str);
 			out[i]=atoi(str);
 		}
 		fclose(file_in);

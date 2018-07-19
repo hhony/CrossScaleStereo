@@ -1,4 +1,3 @@
-#include "..\CommFunc.h"
 #include "GuidedFilter.h"
 
 // cum sum like cumsum in matlab

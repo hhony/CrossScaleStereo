@@ -1,6 +1,6 @@
 #pragma once
-#include "..\CommFunc.h"
-#include "..\CCMethod.h"
+#include "../CommFunc.h"
+#include "../CCMethod.h"
 
 // CVPR 11
 #define BORDER_THRES 0.011764

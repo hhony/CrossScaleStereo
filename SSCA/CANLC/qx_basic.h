@@ -9,9 +9,9 @@
 #include <math.h>
 #include <numeric>
 #include <vector>
-#include <process.h>
-#include <direct.h>
-#include <io.h>
+//#include <process.h>
+//#include <direct.h>
+//#include <io.h>
 #include <time.h>
 #include <string>
 #include <memory.h>
@@ -36,10 +36,11 @@
 #define QX_DEF_ENTER					10
 #define QX_DEF_BLANK					32
 #define QX_DEF_STRING_LENGTH			300
-class qx_timer{public: void start(); double stop(); void time_display(char *disp="",int nr_frame=1); void fps_display(char *disp="",int nr_frame=1); private: double m_pc_frequency; __int64 m_counter_start;};//clock_t m_begin,m_end;};
 
-inline float qx_max_f3(float*a){return(max(max(a[0],a[1]),a[2]));}
-inline float qx_min_f3(float*a){return(min(min(a[0],a[1]),a[2]));}
+//class qx_timer{public: void start(); double stop(); void time_display(char *disp="",int nr_frame=1); void fps_display(char *disp="",int nr_frame=1); private: double m_pc_frequency; __int64_t m_counter_start;};//clock_t m_begin,m_end;};
+
+inline float qx_max_f3(float*a){ return fmax( fmax(a[0], a[1]), a[2]); }
+inline float qx_min_f3(float*a){ return fmin( fmin(a[0], a[1]), a[2]); }
 inline double qx_div(double x,double y){return((y!=0)?(x/y):0);}
 /*Box filter*/
 void boxcar_sliding_window_x(double *out,double *in,int h,int w,int radius);
@@ -58,17 +59,17 @@ inline void qx_image_dot_product(double*out,float*a,float*b,int len){for(int i=0
 inline void qx_image_dot_product(double*out,float*a,unsigned char*b,int len){for(int i=0;i<len;i++)*out++=double(*a++)*double(*b++);}
 inline void qx_image_dot_product(double*out,double*a,double*b,int len){for(int i=0;i<len;i++)*out++=(*a++)*(*b++);}
 //inline float min(float a,float b){if(a<b) return(a); else return(b);}
-//inline float max(float a,float b){if(a>b) return(a); else return(b);}
-inline int qx_sum_u3(unsigned char *a) {return(a[0]+a[1]+a[2]);}
-inline double qx_sum_d3(double*a){return(a[0]+a[1]+a[2]);}
-inline unsigned char qx_min_u3(unsigned char *a){return(min(min(a[0],a[1]),a[2]));}
-inline unsigned char qx_max_u3(unsigned char *a){return(max(max(a[0],a[1]),a[2]));}
-inline unsigned char qx_max_u3(unsigned char r,unsigned char g,unsigned char b){return(max(max(r,g),b));}
+//inline float fmax(float a,float b){if(a>b) return(a); else return(b);}
+inline int qx_sum_u3(unsigned char *a) {return (a[0]+a[1]+a[2]);}
+inline double qx_sum_d3(double*a){return (a[0]+a[1]+a[2]);}
+inline unsigned char qx_min_u3(unsigned char *a){ return (uint8_t) fmin( fmin(a[0], a[1]), a[2] ); }
+inline unsigned char qx_max_u3(unsigned char *a){ return (uint8_t) fmax( fmax(a[0], a[1]), a[2] ); }
+inline unsigned char qx_max_u3(unsigned char r,unsigned char g,unsigned char b){ return (uint8_t) fmax( fmax(r, g), b); }
 inline void image_zero(float **in,int h,int w,float zero=0){memset(in[0],zero,sizeof(float)*h*w);}
 inline void image_zero(double **in,int h,int w,double zero=0){memset(in[0],zero,sizeof(double)*h*w);}
 inline void image_zero(unsigned char**in,int h,int w,unsigned char zero=0){memset(in[0],zero,sizeof(unsigned char)*h*w);}
 inline void image_zero(double ***in,int h,int w,int d,double zero=0){memset(in[0][0],zero,sizeof(double)*h*w*d);}
-inline unsigned char rgb_2_gray(unsigned char*in){return(unsigned char(0.299*in[0]+0.587*in[1]+0.114*in[2]+0.5));}
+inline unsigned char rgb_2_gray(unsigned char*in){return (uint8_t) (0.299*in[0]+0.587*in[1]+0.114*in[2]+0.5);}
 inline int qx_square_difference_u3(unsigned char *a,unsigned char *b){int d1,d2,d3; d1=(*a++)-(*b++); d2=(*a++)-(*b++);	d3=(*a++)-(*b++); return(int(d1*d1+d2*d2+d3*d3));}
 void qx_specular_free_image(unsigned char ***image_specular_free,unsigned char ***image_normalized,float **diffuse_chromaticity_max,int h,int w);
 
@@ -154,7 +155,7 @@ inline void down_sample_1(float**out,float**in,int h,int w,int scale_exp)
 inline double qx_linear_interpolate_xy(double **image,double x,double y,int h,int w)
 {
 	int x0,xt,y0,yt; double dx,dy,dx1,dy1,d00,d0t,dt0,dtt;
-	x0=int(x); xt=min(x0+1,w-1); y0=int(y); yt=min(y0+1,h-1);
+	x0=int(x); xt=fmin(x0+1,w-1); y0=int(y); yt=fmin(y0+1,h-1);
 	dx=x-x0; dy=y-y0; dx1=1-dx; dy1=1-dy; d00=dx1*dy1; d0t=dx*dy1; dt0=dx1*dy; dtt=dx*dy;
 	return(d00*image[y0][x0]+d0t*image[y0][xt]+dt0*image[yt][x0]+dtt*image[yt][xt]);
 }

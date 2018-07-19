@@ -7,12 +7,11 @@
 ///////////////////////////////////////////////////////
 #include "CommFunc.h"
 #include "SSCA.h"
-#include "CC/GrdCC.h"
-#include "CAFilter/GFCA.h"
 #include "GetMehod.h"
 
 
 //#define USE_MEDIAN_FILTER
+
 
 #ifdef USE_MEDIAN_FILTER
 #include"CAST/Toolkit.h"

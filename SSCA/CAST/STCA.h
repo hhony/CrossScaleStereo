@@ -1,6 +1,6 @@
 #pragma once
-#include "..\CommFunc.h"
-#include "..\CAMethod.h"
+#include "../CommFunc.h"
+#include "../CAMethod.h"
 
 //
 // Re compute cost using ST's implementation

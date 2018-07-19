@@ -27,8 +27,7 @@ THE SOFTWARE.
 */
 
 #include "Toolkit.h"
-#include "ctmf.h"
-#include <iostream>
+#include "../ctmf/ctmf.h"
 
 void MeanFilter(cv::InputArray iImage_, cv::OutputArray oImage_, int r) {
 	cv::Mat iImage = iImage_.getMat();

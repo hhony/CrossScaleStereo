@@ -1,6 +1,6 @@
 #pragma once
-#include "..\CommFunc.h"
-#include "..\PPMethod.h"
+#include "../CommFunc.h"
+#include "../PPMethod.h"
 
 #define MED_SZ 19
 #define SIG_CLR 0.1

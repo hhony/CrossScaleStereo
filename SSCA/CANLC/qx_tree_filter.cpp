@@ -1,6 +1,8 @@
 #include "qx_basic.h"
 #include "qx_tree_filter.h"
 
+using namespace std;
+
 qx_tree_filter::qx_tree_filter()
 {
 }
@@ -20,7 +22,7 @@ int qx_tree_filter::init(int h,int w,int nr_channel,double sigma_range,int nr_ne
 }
 void qx_tree_filter::update_table(double sigma_range)
 {
-	sigma_range=max(0.01,sigma_range);
+	sigma_range=fmax(0.01,sigma_range);
 	for(int i=0;i<=QX_DEF_CHAR_MAX;i++) m_table[i]=exp(-double(i)/(QX_DEF_CHAR_MAX*sigma_range));//weight table
 }
 int qx_tree_filter::build_tree(unsigned char*texture)

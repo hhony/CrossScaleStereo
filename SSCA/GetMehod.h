@@ -29,6 +29,7 @@ CCMethod* getCCType( const string name )
 	} else if ( name == "CG" ) {
 		return new CGCC();
 	}
+	return NULL;
 }
 
 // get cost aggregation method name
@@ -45,6 +46,7 @@ CAMethod* getCAType( const string name )
 	} else if ( name == "ST" ) {
 		return new STCA();
 	}
+	return NULL;
 }
 // get cost compuation method name
 PPMethod* getPPType( const string name ) 
@@ -56,4 +58,5 @@ PPMethod* getPPType( const string name )
 	} else if( name == "NP" ) {
 		return NULL;
 	}
+	return NULL;
 }
