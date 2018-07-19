@@ -2,10 +2,7 @@ Cross-Scale Cost Aggregation for Stereo Matching (CVPR 2014)
 ================
 
 ## Compilation
-### Windows
-The code is a Visual Studio 2010 project on Windows x64 platform. To build the project, you need to configure [OpenCV](http://opencv.org/) on your own PC. (version 2.4.6, however, other versions are acceptable by modifying [CommFunc.h](/SSCA/CommFunc.h)).
-### Other Platforms
-The code requires no platform-dependent libraries. Thus, it is easy to compile it on other platforms with OpenCV.
+To build the project, you need to configure [OpenCV](http://opencv.org/) on your own PC. (version 2.4.6, however, other versions are acceptable by modifying [CommFunc.h](/SSCA/CommFunc.h)). The code requires no platform-dependent libraries. Thus, it is easy to compile it on other platforms with OpenCV.
 
 ## Usage
 Run the program with the following paramters:
