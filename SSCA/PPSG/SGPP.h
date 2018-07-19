@@ -3,8 +3,10 @@
 #include "../CommFunc.h"
 #include "../PPMethod.h"
 
+#undef MED_SZ // redefined
 #define MED_SZ        35
 #define SIG_CLR       0.1
+#undef SIG_DIS // redefined
 #define SIG_DIS       17
 
 #define SEG_SIGMA     1.0
