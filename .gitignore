@@ -1,6 +1,8 @@
+# IDE stuff
+.idea/
+cmake-*/
 # my VS ignore bomined
 Thumbs.db
-*.txt
 *.vcxproj.user
 *.opensdf
 *.sdf
